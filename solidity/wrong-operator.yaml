@@ -1,0 +1,11 @@
+rules:
+-
+  id: wrong_operator
+  patterns:
+    - pattern-inside: function $F(...) {...}
+    - pattern-either:
+      - pattern: $A=+$B
+      - pattern: $A=-$B
+  message: Wrong Operator in function $F
+  languages: [solidity]
+  severity: ERROR

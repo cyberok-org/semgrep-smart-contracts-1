@@ -1,0 +1,21 @@
+rules:
+-
+  id: forced-ether
+  patterns:
+    - pattern-inside:
+        function $F(...) {...}
+    - pattern-either:
+      - pattern: |
+          <... address(this).balance ...> == ...
+      - pattern: |
+          $A = <... address(this).balance ...> ==  
+          require(<... $A ...>)
+      - pattern: |  
+          if(<... address(this).balance ...>) {
+            revert;
+          }
+  options:
+    symbolic_propagation: true
+  message: forced ether in function $F
+  severity: ERROR
+  languages: [solidity]

@@ -1,0 +1,30 @@
+rules:
+-
+  id: hidden_build_in_symbols
+  patterns:
+    - pattern-either:
+      - pattern: |
+          function gasleft(...) {...}
+      - pattern: |
+          function blockhash(...) {...}
+      - pattern: |
+          function addmod(...) {...}
+      - pattern: |
+          function mulmod(...) {...}
+      - pattern: |
+          function keccak256(...) {...}
+      - pattern: |
+          function sha256(...) {...}
+      - pattern: |
+          function ripemd160(...) {...}
+      - pattern:
+          function ecrecover(...) {...}
+      - pattern:
+          function require(...) {...}
+      - pattern:
+          function revert(...) {...}
+    - pattern-either:
+      - pattern-inside: function $F(...) {...}
+  message: hidden build in symbol $F
+  severity: ERROR
+  languages: [solidity]
