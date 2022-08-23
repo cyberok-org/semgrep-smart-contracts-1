@@ -1,0 +1,24 @@
+rules:
+-
+  id: potential_signature_with_wrong_number
+  pattern-sources:
+    - pattern-either:
+      - pattern-inside: |
+          function $F(...,$V,$R,$S,...) {...}
+      - pattern-inside: |
+          function $F(...,$V,$R,$S) {...}
+      - pattern-inside: |
+          function $F($V,$R,$S,...) {...}
+      - pattern-inside: |
+          function $F($V,$R,$S) {...}
+    - pattern: |
+        <... ecrecover(...,$V,$R,$S) ...>
+  pattern-sinks:
+    - pattern: |
+        <... ecrecover(...,$V,$R,$S) ...>
+  message: Potential Siganture with wrong number in function $F
+  severity: ERROR
+  mode: taint
+  options:
+    symbolic_propagation: true
+  languages: [solidity]
