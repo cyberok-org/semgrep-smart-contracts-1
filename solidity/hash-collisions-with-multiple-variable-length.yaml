@@ -1,0 +1,33 @@
+rules:
+-
+  id: hash_collisions_with_multiple_variable_length
+  pattern-sources:
+    - patterns:
+      - pattern-inside: |
+          function $F(...) {...}
+      - pattern: |
+          keccak256(abi.encodePacked(...))
+  pattern-sinks:
+    - patterns:
+      - pattern-inside: |
+          function $F(...) {...}
+      - pattern-either:
+        - pattern: |
+            require(...)
+        - pattern: |
+            if (...) {
+                revert;
+            }
+        - pattern: |
+            if (...) {
+                revert(...);
+            }
+
+
+  mode: taint
+  options:
+    symbolic_propagation: true
+  message: hash collisions with multiple variable length in function $F
+  severity: ERROR
+  languages: [solidity]
+
